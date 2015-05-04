@@ -1,8 +1,14 @@
 <?php
+namespace app\modules\user\models;
 
-namespace app\models;
+use yii\base\Object;
+use yii\web\IdentityInterface;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+/**
+ * Class User
+ * @package app\modules\user\models
+ */
+class User extends Object implements IdentityInterface
 {
     public $id;
     public $username;
@@ -28,7 +34,8 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     ];
 
     /**
-     * @inheritdoc
+     * @param int|string $id
+     * @return null|static
      */
     public static function findIdentity($id)
     {
@@ -36,7 +43,9 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * @param mixed $token
+     * @param null $type
+     * @return null|static
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -50,10 +59,8 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
-     * @param  string      $username
-     * @return static|null
+     * @param $username
+     * @return null|static
      */
     public static function findByUsername($username)
     {
@@ -66,9 +73,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
         return null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getId()
     {
         return $this->id;

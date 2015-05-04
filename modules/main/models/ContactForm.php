@@ -1,12 +1,12 @@
 <?php
-
-namespace app\models;
+namespace app\modules\main\models;
 
 use Yii;
 use yii\base\Model;
 
 /**
- * ContactForm is the model behind the contact form.
+ * Class ContactForm
+ * @package app\modules\main\models
  */
 class ContactForm extends Model
 {
@@ -17,34 +17,34 @@ class ContactForm extends Model
     public $verifyCode;
 
     /**
-     * @return array the validation rules.
+     * @return array
      */
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
-            // email has to be a valid email address
-            ['email', 'email'],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            [['name', 'email', 'subject', 'body'], 'required'], //обязательные поля
+            ['email', 'email'], // поле с email'ом - валидное!
+            ['verifyCode', 'captcha', 'captchaAction' => '/main/contact/captcha'], //капча верная!
         ];
     }
 
     /**
-     * @return array customized attribute labels
+     * @return array
      */
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'name' => Yii::t('moduleMain', 'CONTACT_FORM_NAME'),
+            'email' => Yii::t('moduleMain', 'CONTACT_FORM_EMAIL'),
+            'subject' => Yii::t('moduleMain', 'CONTACT_FORM_SUBJECT'),
+            'body' => Yii::t('moduleMain', 'CONTACT_FORM_BODY'),
+            'verifyCode' => Yii::t('moduleMain', 'CONTACT_FORM_VerifyCode'),
         ];
     }
 
     /**
-     * Sends an email to the specified email address using the information collected by this model.
-     * @param  string  $email the target email address
-     * @return boolean whether the model passes validation
+     * @param $email
+     * @return bool
      */
     public function contact($email)
     {
